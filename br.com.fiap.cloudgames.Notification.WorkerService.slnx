@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="br.com.fiap.cloudgames.Notification.Application/br.com.fiap.cloudgames.Notification.Application.csproj" Id="57fed211-fd1b-4443-8853-2e649783ec5f" />
+    <Project Path="br.com.fiap.cloudgames.Notification.Infrastructure/br.com.fiap.cloudgames.Notification.Infrastructure.csproj" Id="de2017db-82ad-4d12-9426-b4deeab63aff" />
+    <Project Path="br.com.fiap.cloudgames.Notification.WorkerService/br.com.fiap.cloudgames.Notification.WorkerService.csproj" />
+  </Folder>
+</Solution>
