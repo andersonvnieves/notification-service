@@ -1,6 +1,6 @@
 ﻿using br.com.fiap.cloudgames.Notification.Application.Events;
-using br.com.fiap.cloudgames.Notification.Application.Interfaces;
 using br.com.fiap.cloudgames.Notification.Application.Models;
+using br.com.fiap.cloudgames.Notification.Application.Services;
 
 namespace br.com.fiap.cloudgames.Notification.Application.Handlers
 {

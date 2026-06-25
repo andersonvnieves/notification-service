@@ -1,5 +1,5 @@
 using br.com.fiap.cloudgames.Notification.Application.Handlers;
-using br.com.fiap.cloudgames.Notification.Application.Interfaces;
+using br.com.fiap.cloudgames.Notification.Application.Services;
 using br.com.fiap.cloudgames.Notification.Infrastructure.Config;
 using br.com.fiap.cloudgames.Notification.Infrastructure.Email;
 using br.com.fiap.cloudgames.Notification.Infrastructure.Messagging;

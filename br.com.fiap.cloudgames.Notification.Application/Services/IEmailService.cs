@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace br.com.fiap.cloudgames.Notification.Application.Interfaces
+namespace br.com.fiap.cloudgames.Notification.Application.Services
 {
     public interface IEmailService
     {
