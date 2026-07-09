@@ -14,14 +14,16 @@ namespace br.com.fiap.cloudgames.Notification.Application.Models
         public override string ToString()
         {
             return $"""
-            Email Message
-            -------------
+            ============================================
+            Email
+            -------------------------------------------
             De: {From}
             Para: {To}
             Assunto: {Subject}
-            
+            -------------------------------------------
             Corpo:
             {Body}
+            ============================================
             """;
         }
     }

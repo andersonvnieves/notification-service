@@ -15,11 +15,13 @@ namespace br.com.fiap.cloudgames.Notification.Application.Handlers
 
         public async Task HandleAsync(PaymentProcessedEvent paymentProcessedEvent)
         {
+            var paymentStatus = paymentProcessedEvent.PaymentStatus == Enums.PaymentStatus.Approved ? "Aprovado" : "Negado";
+
             var msg = new EmailMessage()
             {
                 From = "noreply@fgc.com.br",
                 To = paymentProcessedEvent.Email,
-                Subject = "Pagamento aprovado!",
+                Subject = $"Pagamento {paymentStatus}!",
                 Body = $"Olá, {paymentProcessedEvent.Name}"
             };
 

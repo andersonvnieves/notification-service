@@ -1,3 +1,4 @@
+using br.com.fiap.cloudgames.Notification.Application.Consumers;
 using br.com.fiap.cloudgames.Notification.Application.Handlers;
 using br.com.fiap.cloudgames.Notification.Application.Services;
 using br.com.fiap.cloudgames.Notification.Infrastructure.Config;
@@ -12,11 +13,15 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.Services.Configure<RabbitMqSettings>(builder.Configuration.GetSection("RabbitMQ"));
 
 builder.Services.AddSingleton<RabbitMqConnection>();
+
+//Services
 builder.Services.AddSingleton<IEmailService, ConsoleEmailService>();
 
-builder.Services.AddSingleton<PaymentProcessedConsumer>();
-builder.Services.AddSingleton<UserCreatedConsumer>();
+// Consumers
+builder.Services.AddSingleton<IPaymentProcessedEventConsumer, PaymentProcessedEventConsumer>();
+builder.Services.AddSingleton<IUserCreatedEventConsumer, UserCreatedEventConsumer>();
 
+// Handlers
 builder.Services.AddSingleton<PaymentProcessedEventHandler>();
 builder.Services.AddSingleton<UserCreatedEventHandler>();
 
