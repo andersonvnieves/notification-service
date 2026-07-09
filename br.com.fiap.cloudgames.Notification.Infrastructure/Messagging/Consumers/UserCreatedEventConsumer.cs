@@ -11,6 +11,8 @@ namespace br.com.fiap.cloudgames.Notification.Infrastructure.Messagging.Consumer
     public class UserCreatedEventConsumer : RabbitMqMessageConsumer<UserCreatedEvent>, IUserCreatedEventConsumer
     {
         private readonly UserCreatedEventHandler _handler;
+        private readonly ILogger<UserCreatedEvent> _logger;
+
 
         private IChannel _channel;
 
@@ -21,16 +23,33 @@ namespace br.com.fiap.cloudgames.Notification.Infrastructure.Messagging.Consumer
             : base(rabbitMqConnection, logger, options.Value.UserCreatedEvent.Exchange, options.Value.UserCreatedEvent.RoutingKey)
         {
             _handler = handler;
+            _logger = logger;
         }
 
-        public async Task ConsumeAsync()
+        public new async Task ConsumeAsync()
         {
             await base.ConsumeAsync();
         }
 
         protected override async Task HandleMessageAsync(UserCreatedEvent message)
         {
+            using var scope = _logger.BeginScope(new Dictionary<string, object?>
+            {
+                ["CorrelationId"] = message.CorrelationId,
+                ["EventId"] = message.EventId
+            });
+
+            _logger.LogInformation(
+                "Consuming UserCreatedEvent. EventId={EventId}, CorrelationId={CorrelationId}",
+                message.EventId,
+                message.CorrelationId);
+            
             await _handler.HandleAsync(message);
+            
+            _logger.LogInformation(
+                "UserCreatedEvent processed successfully. EventId={EventId}, CorrelationId={CorrelationId}",
+                message.EventId,
+                message.CorrelationId);
         }
     }
 }

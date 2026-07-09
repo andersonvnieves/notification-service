@@ -19,7 +19,7 @@ namespace br.com.fiap.cloudgames.Notification.Application.Handlers
             {
                 From = "noreply@fgc.com.br",
                 To = userCreatedEvent.Email,
-                Subject = "Bora Jogar!",
+                Subject = "Sua conta foi criada com sucesso!",
                 Body = $"Bem vindo, {userCreatedEvent.Name}"
             };
 

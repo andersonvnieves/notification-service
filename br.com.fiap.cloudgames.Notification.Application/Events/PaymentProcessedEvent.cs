@@ -5,9 +5,8 @@ using System.Text;
 
 namespace br.com.fiap.cloudgames.Notification.Application.Events
 {
-    public class PaymentProcessedEvent
+    public class PaymentProcessedEvent : IntegrationEvent
     {
-        public Guid EventId { get; init; }
         public Guid UserId { get; set; }
         public Guid OrderId { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
