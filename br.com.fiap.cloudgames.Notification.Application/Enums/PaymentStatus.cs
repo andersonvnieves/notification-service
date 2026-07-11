@@ -6,6 +6,7 @@ namespace br.com.fiap.cloudgames.Notification.Application.Enums
 {
     public enum PaymentStatus
     {
+        Pending,
         Approved,
         Rejected
     }
