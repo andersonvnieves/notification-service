@@ -4,4 +4,5 @@
     <Project Path="br.com.fiap.cloudgames.Notification.Infrastructure/br.com.fiap.cloudgames.Notification.Infrastructure.csproj" Id="de2017db-82ad-4d12-9426-b4deeab63aff" />
     <Project Path="br.com.fiap.cloudgames.Notification.WorkerService/br.com.fiap.cloudgames.Notification.WorkerService.csproj" />
   </Folder>
+  <Project Path="br.com.fiap.cloudgames.Notification.Lambda/br.com.fiap.cloudgames.Notification.Lambda.csproj" Id="62ee0b48-7848-4261-a487-1798024d5482" />
 </Solution>
