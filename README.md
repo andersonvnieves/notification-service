@@ -49,3 +49,6 @@ docker run --rm fgc-notification-service:latest
 ```
 
 Informe a configuração de RabbitMQ por variáveis de ambiente quando a imagem for executada fora da orquestração.
+
+
+docker build -t fgc-notification-service:latest .

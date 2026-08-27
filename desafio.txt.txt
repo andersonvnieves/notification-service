@@ -1,0 +1,5 @@
+dotnet lambda deploy-function notification-service
+
+
+aws lambda create-event-source-mapping --function-name notification-service --event-source-arn arn:aws:sqs:us-east-1:257500279765:payment-processed-queue --batch-size 10
+aws lambda create-event-source-mapping --function-name notification-service --event-source-arn arn:aws:sqs:us-east-1:257500279765:user-created-queue --batch-size 10

@@ -21,14 +21,10 @@ namespace br.com.fiap.cloudgames.Notification.Lambda
         {
             var loggerFactory = LoggerFactory.Create(builder =>
             {
-                builder.AddConsole(); // Adiciona o provedor de console que a Lambda lê
-                builder.SetMinimumLevel(LogLevel.Information);
+                builder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
+                builder.AddLambdaLogger();
             });
-
-            // Cria a instância do ILogger<ConsoleEmailService> exigida pelo seu serviço
             _logger = loggerFactory.CreateLogger<ConsoleEmailService>();
-
-            // Instancia o seu serviço passando o logger corretamente
             _emailService = new ConsoleEmailService(_logger);
         }
 
@@ -44,21 +40,25 @@ namespace br.com.fiap.cloudgames.Notification.Lambda
         {
             foreach (var message in evnt.Records)
             {
-                context.Logger.LogInformation($"Mensagem recebida da fila (ARN): {message.EventSourceArn}");
-                context.Logger.LogInformation($"Conteúdo da mensagem: {message.Body}");
+                var queueName = message.EventSourceArn.Split(':').Last();
 
-                // Descobre de qual fila a mensagem veio olhando o ARN ou o nome
-                if (message.EventSourceArn.Contains("user-created-queue"))
+                switch (queueName)
                 {
-                    var evento = JsonSerializer.Deserialize<UserCreatedEvent>(message.Body);
-                    var handler = new UserCreatedEventHandler(new ConsoleEmailService(context.Logger));
-                    await handler.HandleAsync(evento);
-                }
-                else if (message.EventSourceArn.Contains("payment-processed-queue"))
-                {
-                    var evento = JsonSerializer.Deserialize<PaymentProcessedEvent>(message.Body);
-                    var handler = new PaymentProcessedEventHandler(new ConsoleEmailService(context.Logger));
-                    await handler.HandleAsync(evento);
+                    case string name when name.Contains("user-created-queue"):
+                        var userEvent = JsonSerializer.Deserialize<UserCreatedEvent>(message.Body);
+                        var userHandler = new UserCreatedEventHandler(_emailService);
+                        await userHandler.HandleAsync(userEvent);
+                        break;
+
+                    case string name when name.Contains("payment-processed-queue"):
+                        var paymentEvent = JsonSerializer.Deserialize<PaymentProcessedEvent>(message.Body);
+                        var paymentHandler = new PaymentProcessedEventHandler(_emailService);
+                        await paymentHandler.HandleAsync(paymentEvent);
+                        break;
+
+                    default:
+                        _logger.LogWarning("Event type not found for the queue with ARN: {Arn}", message.EventSourceArn);
+                        break;
                 }
             }
 

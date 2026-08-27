@@ -11,10 +11,11 @@
     <PublishReadyToRun>true</PublishReadyToRun>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Amazon.Lambda.Core" Version="2.8.1" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="3.3.0" />
+    <PackageReference Include="Amazon.Lambda.Logging.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.4.5" />
     <PackageReference Include="Amazon.Lambda.SQSEvents" Version="2.2.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="11.0.0-preview.7.26381.103" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\br.com.fiap.cloudgames.Notification.Application\br.com.fiap.cloudgames.Notification.Application.csproj" />
