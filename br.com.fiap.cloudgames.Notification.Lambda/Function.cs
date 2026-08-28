@@ -14,19 +14,7 @@ namespace br.com.fiap.cloudgames.Notification.Lambda
 {
     public class Function
     {
-        private readonly ILogger<ConsoleEmailService> _logger;
-        private readonly ConsoleEmailService _emailService;
-
-        public Function()
-        {
-            var loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Information);
-                builder.AddLambdaLogger();
-            });
-            _logger = loggerFactory.CreateLogger<ConsoleEmailService>();
-            _emailService = new ConsoleEmailService(_logger);
-        }
+        public Function() { }
 
 
         /// <summary>
@@ -46,18 +34,18 @@ namespace br.com.fiap.cloudgames.Notification.Lambda
                 {
                     case string name when name.Contains("user-created-queue"):
                         var userEvent = JsonSerializer.Deserialize<UserCreatedEvent>(message.Body);
-                        var userHandler = new UserCreatedEventHandler(_emailService);
+                        var userHandler = new UserCreatedEventHandler(new ConsoleEmailService(context.Logger));
                         await userHandler.HandleAsync(userEvent);
                         break;
 
                     case string name when name.Contains("payment-processed-queue"):
                         var paymentEvent = JsonSerializer.Deserialize<PaymentProcessedEvent>(message.Body);
-                        var paymentHandler = new PaymentProcessedEventHandler(_emailService);
+                        var paymentHandler = new PaymentProcessedEventHandler(new ConsoleEmailService(context.Logger));
                         await paymentHandler.HandleAsync(paymentEvent);
                         break;
 
                     default:
-                        _logger.LogWarning("Event type not found for the queue with ARN: {Arn}", message.EventSourceArn);
+                        context.Logger.LogWarning("Event type not found for the queue with ARN: {Arn}", message.EventSourceArn);
                         break;
                 }
             }
