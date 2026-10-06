@@ -40,4 +40,4 @@ jobs:
 
     - name: Build and Deploy to Lambda
       working-directory: br.com.fiap.cloudgames.Notification.Lambda
-      run: dotnet lambda deploy-function notification-service
+      run: dotnet lambda deploy-function notification-service --function-role fgc-lambda
