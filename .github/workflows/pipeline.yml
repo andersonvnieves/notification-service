@@ -1,0 +1,42 @@
+name: CI/CD - Build & Publish to AWS Lambda
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  AWS_REGION: sa-east-1
+
+jobs:
+  deploy-lambda:
+    name: Build & Deploy to AWS Lambda
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Install AWS Lambda Tools
+      run: dotnet tool install -g Amazon.Lambda.Tools
+
+    - name: Build and Deploy to Lambda
+      run: dotnet lambda deploy-function notification-service
