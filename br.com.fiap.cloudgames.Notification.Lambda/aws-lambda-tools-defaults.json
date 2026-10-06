@@ -8,8 +8,9 @@
   "profile": "",
   "region": "",
   "configuration": "Release",
-  "function-runtime": "dotnet10",
+  "function-runtime": "dotnet8",
   "function-memory-size": 512,
   "function-timeout": 30,
-  "function-handler": "br.com.fiap.cloudgames.Notification.Lambda::br.com.fiap.cloudgames.Notification.Lambda.Function::FunctionHandler"
+  "function-handler": "br.com.fiap.cloudgames.Notification.Lambda::br.com.fiap.cloudgames.Notification.Lambda.Function::FunctionHandler",
+  "function-name": "notification-service"
 }
